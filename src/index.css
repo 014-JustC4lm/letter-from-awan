@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Background Smooth Gradient + Soft Bokeh ---- */
+
+.animated-bg {
+  background: linear-gradient(115deg, #FFE3EC, #DDEBFF, #FFFFFF);
+  background-size: 300% 300%;
+  animation: movingBackground 12s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Bokeh Particles */
+.animated-bg::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: -20%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(255,255,255,0.5), transparent 60%);
+  filter: blur(50px);
+  animation: float 10s ease-in-out infinite alternate;
+  opacity: 0.4;
+}
+
+.animated-bg::after {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  bottom: -20%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 60%);
+  filter: blur(60px);
+  animation: float2 14s ease-in-out infinite alternate;
+  opacity: 0.35;
+}
+
+/* Animations */
+@keyframes movingBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(50px); }
+}
+
+@keyframes float2 {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-60px); }
+}
+
+
+/* ---- Animated Background Gradient ---- */
+.bg-animated {
+  background: linear-gradient(180deg, #0f172a, #1e1b4b, #312e81, #4c1d95);
+  background-size: 400% 400%;
+  animation: bgShift 18s ease-in-out infinite;
+}
+
+/* ---- Floating Glowing Blobs ---- */
+.blob {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  filter: blur(120px);
+  opacity: 0.65;
+  animation: floaty 10s ease-in-out infinite alternate;
+}
+
+.blob:nth-child(1) {
+  background: rgba(0, 255, 255, 0.45);
+  top: 10%;
+  left: 10%;
+  animation-duration: 14s;
+}
+
+.blob:nth-child(2) {
+  background: rgba(255, 0, 255, 0.42);
+  bottom: 15%;
+  right: 10%;
+  animation-duration: 11s;
+}
+
+.blob:nth-child(3) {
+  background: rgba(153, 0, 255, 0.40);
+  top: 50%;
+  right: 30%;
+  animation-duration: 16s;
+}
+
+@keyframes bgShift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes floaty {
+  0% { transform: translateY(0px) scale(1); }
+  100% { transform: translateY(-150px) scale(1.2); }
+}
+
+@media (max-width: 480px) {
+  .blob {
+    width: 250px;
+    height: 250px;
+    filter: blur(90px);
+  }
+}
+
+html,body {
+  overflow-x: hidden;
+  touch-action: manipulation;
+}
+
+.blob {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  filter: blur(120px);
+  opacity: 0.65;
+  animation: floaty 10s ease-in-out infinite alternate;
+  z-index: 0; /* NEW */
+}
