@@ -100,7 +100,7 @@ return (
         <Slide key={step} {...slides[step]} onNext={() => setStep(step + 1)} />
       ) : (
         <Slide key="final" video={toro} header="For You 🐥🐣" isLast>
-          <TypingText text={finalMessage} speed={4} />
+          <TypingText text={finalMessage} speed={40} />
         </Slide>
       )}
     </AnimatePresence>
