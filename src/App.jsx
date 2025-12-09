@@ -1,7 +1,13 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+
+// Components
 import Slide from "./components/Slide";
 import TypingText from "./components/TypingText";
-import { AnimatePresence } from "framer-motion";
+import LoadingScreen from "./components/LoadingScreen";
+import ConfettiEffect from "./components/ConfettiEffect";
+
+// Assets
 import cat from "./assets/img/cat.mp4";
 import hbd1 from "./assets/img/hbd1.mp4";
 import hbd3 from "./assets/img/hbd3.jpg";
@@ -9,11 +15,13 @@ import cat2 from "./assets/img/cat2.mp4";
 import cat3 from "./assets/img/cat3.jpg";
 import letter from "./assets/img/letter.jpg";
 import toro from "./assets/img/toro.mp4";
-import ConfettiEffect from "./components/ConfettiEffect";
-
 
 export default function App() {
   const [step, setStep] = useState(0);
+  const [loadingDone, setLoadingDone] = useState(false);
+  
+  // confetti muncul sekali ketika enter slide pertama
+  const [confettiTriggered, setConfettiTriggered] = useState(false);
 
   const slides = [
     {
@@ -73,37 +81,60 @@ So sorry if this letter was kinda cringy, cuz it’s a long time ago since I wri
 
 So yeaahhh that’s all from me, selamat ulang tahun yaaa untuk araaa. Thank youuuu, Rawwrrrrrr. 🐥🐣
 
-Oiya, where’s the poem for mee?? I sangat menanti itu lhooo. Tapi gapapa kalau u’re not ready yet, u can show me if u’re fully percaya diri, AHAHAHAAA. Dadahhhh👋
+Oiya, where’s the poem for mee?? I sangat menanti itu lhooo. Tapi gapapa kalau u’re not ready yet, u can show me when u’re fully and truly percaya diri, AHAHAHAAA. Dadahhhh👋
 
 -	Awannn ☁`;
-
   const isLast = step === slides.length;
 
+  // Trigger confetti first time slide screen appears
+  if (loadingDone && !confettiTriggered) {
+    setTimeout(() => setConfettiTriggered(true), 300);
+  }
 
-  
-return (
-  <div className="min-h-screen flex items-center justify-center overflow-hidden relative bg-animated z-0">
+  return (
+    <div className="min-h-screen flex items-center justify-center overflow-hidden relative bg-animated z-0">
 
+      {/* Confetti only once */}
+      {confettiTriggered && <ConfettiEffect active={true} />}
 
-    {/* Confetti muncul hanya di final slide */}
-    <ConfettiEffect active={isLast} />
+      {/* Background animations */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="blob"></div>
+        <div className="blob"></div>
+        <div className="blob"></div>
+      </div>
 
-    {/* Glowing Background */}
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="blob"></div>
-      <div className="blob"></div>
-      <div className="blob"></div>
+      <AnimatePresence mode="wait">
+        {!loadingDone ? (
+          // Fade loading out
+          <motion.div
+            key="loading"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2 }}
+            className="w-full"
+          >
+            <LoadingScreen onFinish={() => setLoadingDone(true)} />
+          </motion.div>
+        ) : (
+          // Fade slide in
+          <motion.div
+            key="slides"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2 }}
+            className="w-full"
+          >
+            {!isLast ? (
+              <Slide key={step} {...slides[step]} onNext={() => setStep(step + 1)} />
+            ) : (
+              <Slide key="final" video={toro} header="For You 🐥🐣" isLast>
+                <TypingText text={finalMessage} speed={30} />
+              </Slide>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-
-    <AnimatePresence mode="wait">
-      {!isLast ? (
-        <Slide key={step} {...slides[step]} onNext={() => setStep(step + 1)} />
-      ) : (
-        <Slide key="final" video={toro} header="For You 🐥🐣" isLast>
-          <TypingText text={finalMessage} speed={40} />
-        </Slide>
-      )}
-    </AnimatePresence>
-  </div>
-);
+  );
 }
