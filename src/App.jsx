@@ -61,7 +61,7 @@ export default function App() {
     },
   ];
 
-  const finalMessage = `Hi hiiii Sarah Aulia Nursyifa, or what I always call as Araaa. This letter is written a hundred percent by Awan, no no ai have been used in this letter. 🎀
+  const finalMessage = `Hi hiiii Sarah Aulia Nur Syifa, or what I always call as Araaa. This letter is written a hundred percent by Awan, no no ai have been used in this letter. 🎀
 
 Hloooowwww, you’re now a student in highschool. Yess, you’re not adek-adek anymore. Sekarang kita ada di jenjang yang sama raaa. Kita sama sama punya beban saat pertama kali memasuki gerbang sekolah yang baru. Aku dengan rasa penyesalanku yang membatasi diri, dan kamu dengan rasa cemas yang perlu beradaptasi dengan lingkungan yang baru. Tapi aku percaya, kamu suda menaklukkan rasa cemas itu dengan caramu sendiri, karena ara kan kerenn. 🔥
 
